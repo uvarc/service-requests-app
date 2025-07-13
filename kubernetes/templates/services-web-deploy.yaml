@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: services-web
+  namespace: service-requests-api
+  labels:
+    app: services-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: services-web
+  template:
+    metadata:
+      labels:
+        app: services-web
+    spec:
+      containers:
+        - name: main
+          image: ghcr.io/uvarc/services-web:latest
+          ports:
+            - containerPort: 3001
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
