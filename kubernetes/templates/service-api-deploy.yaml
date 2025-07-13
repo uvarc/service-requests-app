@@ -15,6 +15,8 @@ spec:
       labels:
         app: service-api
     spec:
+      imagePullSecrets:
+        - name: ghcr-regcred
       containers:
         - name: main
           image: ghcr.io/uvarc/service-api:latest
