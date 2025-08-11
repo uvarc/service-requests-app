@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.org/proxy-connect-timeout: 600s
+    nginx.org/proxy-read-timeout: 600s
+    nginx.org/proxy-send-timeout: 600s
+    nginx.org/websocket-services: services-web
+  name: services-web-ingress
+  namespace: service-requests-api
+spec:
+  rules:
+    - host: services-web.pods.uvarc.io
+      http:
+        paths:
+          - backend:
+              service:
+                name: services-web
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - services-web.pods.uvarc.io
+      secretName: services-web-nginx-tls-ingress-secret

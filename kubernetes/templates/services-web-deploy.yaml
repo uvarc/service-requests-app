@@ -29,3 +29,11 @@ spec:
             limits:
               cpu: "250m"
               memory: "256Mi"
+          env:
+            - name: API_CLIENT_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: service-api-secrets
+                  key: API_CLIENT_KEYS
+            - name: ENDPOINT_URL
+              value: "http://service-api:8080"
